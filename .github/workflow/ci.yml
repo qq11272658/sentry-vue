@@ -1,6 +1,4 @@
 name: 构建和部署
-env:
-  ACTIONS_STEP_DEBUG: true    # 启用详细日志
 on: # 监听 main 分支上的 push 事件
   push:
     branches:
@@ -23,11 +21,11 @@ jobs:
 
       - name: Install and Build # 下载依赖 打包项目
         run: |
-          echo "开始安装依赖"
+          echo "::notice::开始安装依赖"
           pnpm install
-          echo "开始构建"
+          echo "::notice::开始构建"
           pnpm run build
-          echo "构建完成"
+          echo "::notice::构建完成"
 
       - name: Deploy # 将打包内容发布到 github page
         uses: JamesIves/github-pages-deploy-action@3.5.9 # 使用别人写好的 actions
