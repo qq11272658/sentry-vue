@@ -1,0 +1,31 @@
+name: 构建和部署
+on: # 监听 main 分支上的 push 事件
+  push:
+    branches:
+      - main
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest # 构建环境使用 ubuntu
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2.3.1
+        with:
+          persist-credentials: false
+          ref: main
+
+      - name: Install and Build # 下载依赖 打包项目
+        run: |
+          echo "开始安装依赖"
+          pnpm install
+          echo "开始构建"
+          pnpm run build
+          echo "构建完成"
+
+      - name: Deploy # 将打包内容发布到 github page
+        uses: JamesIves/github-pages-deploy-action@3.5.9 # 使用别人写好的 actions
+        with: # 自定义环境变量
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }} # VUE_ADMIN_TEMPLATE 是我的 secret 名称，需要替换成你的
+          BRANCH: production
+          FOLDER: dist
+          REPOSITORY_NAME: qq11272658.github.io # 这是我的 github page 仓库
+          TARGET_FOLDER: sentry-vue # 打包的文件将放到静态服务器 sentry-vue 目录下
