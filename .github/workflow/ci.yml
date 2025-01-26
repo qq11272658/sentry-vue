@@ -1,4 +1,6 @@
 name: 构建和部署
+env:
+  ACTIONS_STEP_DEBUG: true    # 启用详细日志
 on: # 监听 main 分支上的 push 事件
   push:
     branches:
