@@ -7,6 +7,7 @@ on: # 监听 main 分支上的 push 事件
 
 jobs:
   build:
+    name: 打包
     runs-on: ubuntu-latest # 构建环境使用 ubuntu
     steps:
       - name: Checkout 代码
@@ -28,13 +29,18 @@ jobs:
       - name: 打包项目
         run: pnpm run build
 
-      # 移除 Jekyll 相关步骤，添加目录验证
       - name: 验证构建结果
         run: |
           ls -la
           ls -la dist/
 
+      - name: 上传构建产物
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: dist  # 必须与构建目录一致
+
   deploy:
+    name: 部署
     needs: build
     permissions:
       pages: write
@@ -47,6 +53,7 @@ jobs:
       # 使用新版 GitHub Pages 部署方式
     steps:
       - name: 部署到 GitHub Pages
+        id: deployment  # 关键标识
         uses: actions/deploy-pages@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
