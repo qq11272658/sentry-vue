@@ -20,7 +20,7 @@ jobs:
           cache: 'pnpm'
 
       - name: 安装pnpm
-      - uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v2
         with:
           version: 8
 
@@ -47,7 +47,7 @@ jobs:
       - name: 上传构建产物
         uses: actions/upload-pages-artifact@v3
         with:
-          path: dist  # 必须与构建目录一致
+          path: dist # 必须与构建目录一致
 
   deploy:
     name: 部署
@@ -63,5 +63,5 @@ jobs:
       # 使用新版 GitHub Pages 部署方式
     steps:
       - name: 部署到 GitHub Pages
-        id: deployment  # 关键标识
+        id: deployment # 关键标识
         uses: actions/deploy-pages@v4
