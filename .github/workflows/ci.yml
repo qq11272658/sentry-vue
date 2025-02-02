@@ -11,10 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 克隆代码
-      - uses: actions/checkout@v4
+        uses: actions/checkout@v4
 
       - name: 安装node
-      - uses: actions/setup-node@v4
+        uses: actions/setup-node@v4
         with:
           node-verions: '20'
           cache: 'pnpm'
