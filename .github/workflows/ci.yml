@@ -35,7 +35,7 @@ jobs:
           ls -la dist/
 
       - name: 上传构建产物
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/upload-pages-artifact@v3
         with:
           path: dist  # 必须与构建目录一致
 
@@ -55,5 +55,3 @@ jobs:
       - name: 部署到 GitHub Pages
         id: deployment  # 关键标识
         uses: actions/deploy-pages@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
