@@ -11,10 +11,6 @@ jobs:
     steps:
       - name: Checkout 代码
         uses: actions/checkout@v4
-        with:
-          persist-credentials: true
-          ref: main
-          token: ${{ secrets.ACCESS_TOKEN }}
 
       - name: 设置 Node.js
         uses: actions/setup-node@v4
@@ -32,12 +28,17 @@ jobs:
       - name: 打包项目
         run: pnpm run build
 
-      - name: 部署 # 将打包内容发布到 github page
-        uses: JamesIves/github-pages-deploy-action@4 # 使用别人写好的 actions
-        with: # 自定义环境变量
-          token: ${{ secrets.ACCESS_TOKEN }} # ACCESS_TOKEN 是我的 secret 名称，需要替换成你的
-          branch: main
-          folder: dist
-          repository-name: qq11272658/qq11272658.github.io # 这是我的 github page 仓库
-          target-folder: sentry-vue # 打包的文件将放到静态服务器 sentry-vue 目录下
+      # 移除 Jekyll 相关步骤，添加目录验证
+      - name: 验证构建结果
+        run: |
+          ls -la
+          ls -la dist/
+
+      # 使用新版 GitHub Pages 部署方式
+      - name: 部署到 GitHub Pages
+        uses: actions/deploy-pages@v4
+        with:
+          token: ${{ secrets.ACCESS_TOKEN }}
+          target-branch: main
+          build-directory: dist # 与 Vue 项目的输出目录一致
 
