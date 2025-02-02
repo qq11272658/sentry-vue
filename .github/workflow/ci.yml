@@ -3,23 +3,29 @@ on: # 监听 main 分支上的 push 事件
   push:
     branches:
       - main
-  workflow_dispatch
+  workflow_dispatch:
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest # 构建环境使用 ubuntu
     steps:
       - name: Checkout
-        uses: actions/checkout@v2.3.1
+        uses: actions/checkout@v4
         with:
           persist-credentials: false
           ref: main
+
+      - name: 设置 Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
 
       - name: 安装pnpm
         uses: pnpm/action-setup@v2
         with:
           version: latest
 
-      - name: Install and Build # 下载依赖 打包项目
+      - name: 安装依赖和构建 # 下载依赖 打包项目
         run: |
           echo "::notice::开始安装依赖"
           pnpm install
@@ -27,12 +33,12 @@ jobs:
           pnpm run build
           echo "::notice::构建完成"
 
-      - name: Deploy # 将打包内容发布到 github page
-        uses: JamesIves/github-pages-deploy-action@3.5.9 # 使用别人写好的 actions
+      - name: 部署 # 将打包内容发布到 github page
+        uses: JamesIves/github-pages-deploy-action@4 # 使用别人写好的 actions
         with: # 自定义环境变量
-          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }} # ACCESS_TOKEN 是我的 secret 名称，需要替换成你的
-          BRANCH: main
-          FOLDER: dist
-          REPOSITORY_NAME: qq11272658.github.io # 这是我的 github page 仓库
-          TARGET_FOLDER: sentry-vue # 打包的文件将放到静态服务器 sentry-vue 目录下
+          token: ${{ secrets.ACCESS_TOKEN }} # ACCESS_TOKEN 是我的 secret 名称，需要替换成你的
+          branch: main
+          folder: dist
+          repository-name: qq11272658.github.io # 这是我的 github page 仓库
+          target-folder: sentry-vue # 打包的文件将放到静态服务器 sentry-vue 目录下
 
