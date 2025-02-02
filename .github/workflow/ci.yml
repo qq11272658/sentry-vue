@@ -12,27 +12,25 @@ jobs:
       - name: Checkout 代码
         uses: actions/checkout@v4
         with:
-          persist-credentials: false
+          persist-credentials: true
           ref: main
           token: ${{ secrets.ACCESS_TOKEN }}
 
       - name: 设置 Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '20'
 
       # - name: 安装pnpm
       #   uses: pnpm/action-setup@v2
       #   with:
       #     version: latest
 
-      - name: 安装依赖和构建 # 下载依赖 打包项目
-        run: |
-          echo "::notice::开始安装依赖"
-          npm install
-          echo "::notice::开始构建"
-          npm run build
-          echo "::notice::构建完成"
+      - name: 安装依赖
+        run: npm install
+
+      - name: 打包项目
+        run: npm run build
 
       - name: 部署 # 将打包内容发布到 github page
         uses: JamesIves/github-pages-deploy-action@4 # 使用别人写好的 actions
