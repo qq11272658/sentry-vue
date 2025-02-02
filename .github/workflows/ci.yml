@@ -36,6 +36,12 @@ jobs:
 
   deploy:
     needs: build
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on:
       ubuntu-latest
       # 使用新版 GitHub Pages 部署方式
@@ -43,6 +49,4 @@ jobs:
       - name: 部署到 GitHub Pages
         uses: actions/deploy-pages@v4
         with:
-          token: ${{ secrets.ACCESS_TOKEN }}
-          target-branch: main
-          build-directory: dist    # 与 Vue 项目的输出目录一致
+          token: ${{ secrets.GITHUB_TOKEN }}
