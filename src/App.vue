@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import HelloWorld from './components/HelloWorld.vue'
-const a = 6
+const a      = 6
 </script>
 
 <template>
-  <HelloWorld msg="You did it!666" />
+  <HelloWorld msg="You did it!666 777" />
 </template>
 
 <style scoped></style>
