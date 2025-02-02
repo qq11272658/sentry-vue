@@ -45,4 +45,4 @@ jobs:
         with:
           token: ${{ secrets.ACCESS_TOKEN }}
           target-branch: main
-          build-directory: dist # 与 Vue 项目的输出目录一致
+          build-directory: dist    # 与 Vue 项目的输出目录一致
