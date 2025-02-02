@@ -29,7 +29,7 @@ jobs:
       - name: 安装依赖和构建 # 下载依赖 打包项目
         run: |
           echo "::notice::开始安装依赖"
-          npm run install
+          npm install
           echo "::notice::开始构建"
           npm run build
           echo "::notice::构建完成"
