@@ -9,7 +9,7 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest # 构建环境使用 ubuntu
     steps:
-      - name: Checkout
+      - name: Checkout 代码
         uses: actions/checkout@v4
         with:
           persist-credentials: false
@@ -20,17 +20,17 @@ jobs:
         with:
           node-version: '18'
 
-      - name: 安装pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: latest
+      # - name: 安装pnpm
+      #   uses: pnpm/action-setup@v2
+      #   with:
+      #     version: latest
 
       - name: 安装依赖和构建 # 下载依赖 打包项目
         run: |
           echo "::notice::开始安装依赖"
-          pnpm install
+          npm run install
           echo "::notice::开始构建"
-          pnpm run build
+          npm run build
           echo "::notice::构建完成"
 
       - name: 部署 # 将打包内容发布到 github page
