@@ -1,6 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import Home from '../components/Home.vue'
-import My from '../components/My.vue'
+import Home from '../components/HomePage.vue'
+import My from '../components/MyPage.vue'
 
 const router = createRouter({
   history: createWebHashHistory('/sentry-vue/'),
